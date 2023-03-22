@@ -6,13 +6,155 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Hello World!"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Row"
+                android:textSize="10pt" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:gravity="center_horizontal"
+                    android:background="#ff5252"
+                    android:layout_width="50pt"
+                    android:layout_height="50pt"/>
+                <ImageView
+                    android:gravity="center_horizontal"
+                    android:background="#ffff00"
+                    android:layout_width="50pt"
+                    android:layout_height="50pt"/>
+                <ImageView
+                    android:background="#69f0ae"
+                    android:layout_width="50pt"
+                    android:layout_height="50pt"/>
+            </LinearLayout>
+            <TextView
+                android:text="Column"
+                android:textSize="10pt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="50pt"
+                    android:layout_height="50pt"
+                    android:background="#ff5252"
+                    android:gravity="center_horizontal" />
+                <ImageView
+                    android:layout_width="50pt"
+                    android:layout_height="50pt"
+                    android:background="#ffff00"
+                    android:gravity="center_horizontal" />
+                <ImageView
+                    android:layout_width="50pt"
+                    android:layout_height="50pt"
+                    android:background="#69f0ae"
+                    android:text="" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ListView"
+                android:textSize="10pt" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="600px"
+                android:layout_weight="1"
+                android:weightSum="5">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="2"
+                    android:background="#ff5252"
+                    android:gravity="center_horizontal"
+                    android:text="" />
+                <ImageView
+                    android:text=""
+                    android:gravity="center_horizontal"
+                    android:background="#ffff00"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="2"/>
+                <ImageView
+                    android:text=""
+                    android:background="#69f0ae"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="GridView"
+                android:textSize="10pt" />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="0"
+                android:padding="20px">
+                <TableRow
+                    android:layout_height="match_parent"
+                    android:padding="20px">
+                    <TextView
+                        android:layout_height="300px"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:text="He'd have you all unravel at the"
+                        android:background="#b2dfdb"
+                        android:padding="20px"
+                        android:layout_marginRight="20px"/>
+                    <TextView
+                        android:layout_height="300px"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:text="Heed not the rabble"
+                        android:background="#80cbc4"
+                        android:padding="20px"
+                        android:layout_marginLeft="20px"/>
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+                </TableRow>
+                <TableRow
+                    android:layout_height="match_parent"
+                    android:padding="20px">
+                    <TextView
+                        android:layout_height="300px"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:text="Sound of screams but the"
+                        android:background="#4db6ac"
+                        android:padding="20px"
+                        android:layout_marginRight="20px"/>
+                    <TextView
+                        android:layout_height="300px"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:text="Who scream"
+                        android:background="#26a69a"
+                        android:padding="20px"
+                        android:layout_marginLeft="20px"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!--    TranThanhPhong - 20521750-->
