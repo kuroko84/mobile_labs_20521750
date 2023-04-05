@@ -8,17 +8,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
-    TextView CalPersonSalary;
+    TextView ResultView;
     EditText inputTextName;
     EditText inputTextSal;
+
     public class Employee {
         String Name;
-        Long Sal;
+        Double Sal;
         public Employee(){};
-        public Employee(String name, Long sal){
+        public Employee(String name, Double sal){
             this.Name = name;
             this.Sal = sal;
+        }
+        public Double CalculateSalary(Double sal){
+            if(sal <= 11000000)
+                return sal;
+            else
+                return(sal - 11000000) * 0.95 + 11000000;
         }
     }
     Button btn;
@@ -27,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        CalPersonSalary = (TextView) findViewById(R.id.CalPersonSalary);
+        ResultView = (TextView) findViewById(R.id.Result);
         inputTextName = (EditText) findViewById(R.id.inputName);
         inputTextSal = (EditText) findViewById(R.id.inputSal);
         btn = (Button)  findViewById(R.id.btn_cal_sal);
@@ -38,9 +47,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view)
                 {
                     String name = inputTextName.getText().toString();
-                    Long sal = Long.parseLong(inputTextSal.getText().toString());
+                    Double sal = Double.parseDouble(inputTextSal.getText().toString());
                     Employee emp = new Employee(name, sal);
-                    CalPersonSalary.setText(emp.Name + emp.Sal );
+                    String ResultName = ResultView.getText().toString();
+                    String Result = ResultName + "\n" + emp.Name;
+                    Result += " " + String.format("%.0f",emp.CalculateSalary(emp.Sal));
+                    ResultView.setText(Result);
                 }
             }
         );
