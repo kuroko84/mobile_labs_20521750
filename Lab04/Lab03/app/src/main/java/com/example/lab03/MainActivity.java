@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,13 +26,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class MainActivity extends AppCompatActivity {
     public Button btn;
     public Button btn2;
     public TextView tv;
+    public EditText etName, etPhone, etUsername, etPassword;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public CollectionReference user = db.collection("user");
+
+    // Kiểm tra username
+    public boolean isUsernameValid(String username) {
+        // Kiểm tra độ dài tối thiểu là 6 ký tự và chỉ chứa chữ cái
+        String pattern = "[a-zA-Z]{6,}";
+        return username.matches(pattern);
+    }
+
+    // Kiểm tra password
+    public boolean isPasswordValid(String password) {
+        // Kiểm tra độ dài tối thiểu là 6 ký tự
+        return password.length() >= 6;
+    }
 
 
     @Override
@@ -45,7 +62,11 @@ public class MainActivity extends AppCompatActivity {
 //        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.RED));
 
         btn = (Button) findViewById(R.id.button);
-        tv = (TextView) findViewById(R.id.backtologin);
+
+        etName = (EditText) findViewById(R.id.editTextName);
+        etPhone = (EditText) findViewById(R.id.editTextPhone);
+        etUsername = (EditText) findViewById(R.id.editTextUsername);
+        etPassword = (EditText) findViewById(R.id.editTextPassword);
 
         btn.setOnClickListener(
             new View.OnClickListener()
@@ -53,37 +74,65 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view)
                 {
-                    //Thêm user
+                    //Get values
+                    String name = etName.getText().toString();
+                    String phone = etPhone.getText().toString();
+                    String username = etUsername.getText().toString();
+                    String password = etPassword.getText().toString();
 
-//                        Map<String, Object> user = new HashMap<>();
-//                        user.put("first", "Ada");
-//                        user.put("last", "Lovelace");
-//                        user.put("born", 1815);
-//
-//                        // Add a new document with a generated ID
-//                        db.collection("user")
-//                                .add(user);
-                    // direct to login
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.rgb(0, 255, 128)));
+                    if(isUsernameValid(username) && isPasswordValid(password)){
+                        //mã hoá password
+                        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(6));
 
-                    TextView textMessage = dialog.findViewById(R.id.text_notify);
+                        //check password
+                        boolean isPasswordMatched = BCrypt.checkpw(password, hashedPassword);
 
-                    textMessage.setText("Register Successfully");
+                        //Thêm user
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("Name", name);
+                        user.put("Phone", phone);
+                        user.put("Username", username);
+                        user.put("HashedPassword", hashedPassword);
+                        // Add a new document with a generated ID
+                        db.collection("user").add(user);
 
-                    dialog.show();
+                        // thông báo dăng ký thành công
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.rgb(0, 255, 128)));
+                        TextView textMessage = dialog.findViewById(R.id.text_notify);
+                        textMessage.setText("Register Successfully");
+                        dialog.show();
 
-                    // Đóng Dialog sau vài giây
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.dismiss();
-                        }
-                    }, 5000);
-                    Intent intent = new Intent(MainActivity.this, login.class);
-                    startActivity(intent);
+                        // Đóng Dialog sau vài giây
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        }, 5000);
+
+                        // direct to login
+                        Intent intent = new Intent(MainActivity.this, login.class);
+                        startActivity(intent);
+                    } else {
+                        // thông báo dăng ký thất bại
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.RED));
+                        TextView textMessage = dialog.findViewById(R.id.text_notify);
+                        textMessage.setText("Register Failed");
+                        dialog.show();
+
+                        // Đóng Dialog sau vài giây
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        }, 5000);
+                    }
                 }
             }
         );
+        // back to login
+        tv = (TextView) findViewById(R.id.backtologin);
         tv.setOnClickListener(
                 new View.OnClickListener()
                 {
@@ -96,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+
+
+
 //        btn2 = (Button) findViewById(R.id.button2);
 //
 //        btn2.setOnClickListener(new View.OnClickListener()

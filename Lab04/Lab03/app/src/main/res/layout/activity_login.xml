@@ -63,7 +63,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/editTextLoginUsername"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:ems="10"
@@ -81,7 +81,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/editTextLoginPassword"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:ems="10"
